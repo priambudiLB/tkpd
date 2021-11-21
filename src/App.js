@@ -1,24 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import Cookies from "universal-cookie";
 
 function App() {
+  const cookies = new Cookies();
+
+  const handleSetStrict = () => {
+    cookies.set("sid(strict)", "123456", {
+      path: "/",
+      sameSite: "strict",
+    });
+    window.location.reload();
+  };
+
+  const handleSetLax = () => {
+    cookies.set("sid(Lax)", "123456", {
+      path: "/",
+      sameSite: "lax",
+    });
+    window.location.reload();
+  };
+
+  const handleSetNoneSecure = () => {
+    cookies.set("sid(None, Secure)", "123456", {
+      path: "/",
+      sameSite: "none",
+      secure: true
+    });
+    window.location.reload();
+  };
+
+  const handleSetNoneNotSecure = () => {
+    cookies.set("sid(None, Not Secure)", "123456", {
+      path: "/",
+      sameSite: "none",
+      secure: false
+    });
+    window.location.reload();
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <button onClick={handleSetStrict}>Strict</button>
+      <button onClick={handleSetLax}>Lax</button>
+      <button onClick={handleSetNoneSecure}>None, Secure</button>
+      <button onClick={handleSetNoneNotSecure}>None, Not Secure</button>
+    </>
   );
 }
 
